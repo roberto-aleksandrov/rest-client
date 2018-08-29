@@ -19,11 +19,12 @@
         private readonly ISerializer _serializer;
         private readonly IExecutor _executor;
 
-        public RestClient(HttpClient client, IHttpRequestBuilder httpRequestBuilder, ISerializer serializer)
+        public RestClient(HttpClient client, IHttpRequestBuilder httpRequestBuilder, ISerializer serializer, IExecutor executor)
         {
             _client = client;
             _httpRequestBuilder = httpRequestBuilder;
             _serializer = serializer;
+            _executor = executor;
         }
 
         private IHttpContext GenerateHttpContext(Uri uri, HttpMethod method, IDictionary<string, string> headers, object request = null)
