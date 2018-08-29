@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using Models.Interfaces;
+    using Contracts.Interfaces;
 
     public interface IRestClient
     {

@@ -6,8 +6,8 @@
     using System.Threading.Tasks;
     using Client.Interfaces;
     using Builders.Interfaces;
-    using Models.Interfaces;
     using Serializers.Interfaces;
+    using Contracts.Interfaces;
 
     public class RestClient : IRestClient
     {
