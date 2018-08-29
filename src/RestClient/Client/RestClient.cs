@@ -64,42 +64,42 @@
             return _serializer.Deserialize<TResponse>(httpContext.Response.Content);
         }
 
-        public async Task<TResponse> DeleteAsync<TRequest, TResponse>(Uri uri, TRequest request = null, IDictionary<string, string> headers = null, IHttpContext requestContext = null)
+        public async Task<TResponse> DeleteAsync<TRequest, TResponse>(Uri uri, TRequest request = null, IDictionary<string, string> headers = null)
             where TRequest : class
             where TResponse : class
         {
             var httpContext = GenerateHttpContext(uri, HttpMethod.Delete, headers, request);
             var requestMessage = BuildRequestMessage(HttpMethod.Delete, uri, headers, request);
 
-            return await ExecuteAsync<TResponse>(requestMessage, requestContext);
+            return await ExecuteAsync<TResponse>(requestMessage, httpContext);
         }
 
-        public async Task<TResponse> GetAsync<TResponse>(Uri uri, IDictionary<string, string> headers = null, IHttpContext requestContext = null) where TResponse : class
+        public async Task<TResponse> GetAsync<TResponse>(Uri uri, IDictionary<string, string> headers = null) where TResponse : class
         {
             var httpContext = GenerateHttpContext(uri, HttpMethod.Get, headers);
             var requestMessage = BuildRequestMessage(HttpMethod.Get, uri, headers);
 
-            return await ExecuteAsync<TResponse>(requestMessage, requestContext);
+            return await ExecuteAsync<TResponse>(requestMessage, httpContext);
         }
 
-        public async Task<TResponse> PostAsync<TRequest, TResponse>(Uri uri, TRequest request = null, IDictionary<string, string> headers = null, IHttpContext requestContext = null)
+        public async Task<TResponse> PostAsync<TRequest, TResponse>(Uri uri, TRequest request = null, IDictionary<string, string> headers = null)
             where TRequest : class
             where TResponse : class
         {
             var httpContext = GenerateHttpContext(uri, HttpMethod.Post, headers, request);
             var requestMessage = BuildRequestMessage(HttpMethod.Post, uri, headers, request);
 
-            return await ExecuteAsync<TResponse>(requestMessage, requestContext);
+            return await ExecuteAsync<TResponse>(requestMessage, httpContext);
         }
 
-        public async Task<TResponse> PutAsync<TRequest, TResponse>(Uri uri, TRequest request = null, IDictionary<string, string> headers = null, IHttpContext requestContext = null)
+        public async Task<TResponse> PutAsync<TRequest, TResponse>(Uri uri, TRequest request = null, IDictionary<string, string> headers = null)
             where TRequest : class
             where TResponse : class
         {
             var httpContext = GenerateHttpContext(uri, HttpMethod.Put, headers, request);
             var requestMessage = BuildRequestMessage(HttpMethod.Put, uri, headers, request);
 
-            return await ExecuteAsync<TResponse>(requestMessage, requestContext);
+            return await ExecuteAsync<TResponse>(requestMessage, httpContext);
         }
     }
 }
