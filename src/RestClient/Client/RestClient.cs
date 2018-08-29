@@ -47,24 +47,21 @@
         private async Task<TResponse> ExecuteAsync<TResponse>(HttpRequestMessage requestMessage, IHttpContext httpContext = null)
             where TResponse : class
         {
-            HttpResponseMessage responseMessage = null;
-            string content = null;
-
             await _executor.Execute(async () =>
             {
-                responseMessage = await _client.SendAsync(requestMessage);
-                content = await responseMessage.Content.ReadAsStringAsync();
+                var responseMessage = await _client.SendAsync(requestMessage);
+                var content = await responseMessage.Content.ReadAsStringAsync();
                 var headers = responseMessage.Headers.ToDictionary(n => n.Key, n => string.Join(" ", n.Value));
 
                 httpContext.Response = new Response(content, (int)responseMessage.StatusCode, headers);
             }, httpContext);
 
-            if (!responseMessage.IsSuccessStatusCode)
+            if (!httpContext.Response.IsSuccessStatusCode)
             {
-                throw new RestClientException(content, httpContext.Response.StatusCode);
+                throw new RestClientException(httpContext.Response.Content, httpContext.Response.StatusCode);
             }
 
-            return _serializer.Deserialize<TResponse>(content);
+            return _serializer.Deserialize<TResponse>(httpContext.Response.Content);
         }
 
         public async Task<TResponse> DeleteAsync<TRequest, TResponse>(Uri uri, TRequest request = null, IDictionary<string, string> headers = null, IHttpContext requestContext = null)

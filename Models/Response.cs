@@ -4,17 +4,17 @@
 
     public class Response
     {
-        public Response(object content, int statusCode)
+        public Response(string content, int statusCode)
             : this(content, statusCode, new Dictionary<string, string>()){ }
 
-        public Response(object content, int statusCode, IDictionary<string, string> headers)
+        public Response(string content, int statusCode, IDictionary<string, string> headers)
         {
             Content = content;
             StatusCode = statusCode;
             Headers = headers;
         }
 
-        public object Content { get; }
+        public string Content { get; }
 
         public int StatusCode { get; }
 
