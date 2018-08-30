@@ -8,7 +8,6 @@
     using Builders.Interfaces;
     using Serializers.Interfaces;
     using Exceptions;
-    using Contracts;
     using System.Threading;
     using Contracts.Interfaces;
 
