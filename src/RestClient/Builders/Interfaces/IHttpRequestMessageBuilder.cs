@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Net.Http;
 
-    public interface IHttpRequestMessageBuilder
+    internal interface IHttpRequestMessageBuilder
     {
         IHttpRequestMessageBuilder ToUri(Uri uri);
 

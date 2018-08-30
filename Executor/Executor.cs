@@ -1,36 +1,49 @@
-﻿namespace Executor
+﻿namespace Executors
 {
     using Contracts.Interfaces;
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    public class Executor : IExecutor
+    public class Executor<Tin, Tout> : IExecutor<Tin, Tout>
     {
-        private IList<IExtender> _extenders;
+        protected readonly ICollection<IExtender<Tin, Tout>> Extenders;
 
-        public Executor(IList<IExtender> extenders)
+        public Executor(ICollection<IExtender<Tin, Tout>> extenders)
         {
-            _extenders = extenders;
+            Extenders = extenders;
         }
 
-        public void AddRequestExtender(IExtender extender)
+        public void AddRequestExtender(IExtender<Tin, Tout> extender)
         {
-            _extenders.Add(extender);
+            Extenders.Add(extender);
         }
         
-        public void RemoveRequestExtender(IExtender extender)
+        public void RemoveRequestExtender(IExtender<Tin, Tout> extender)
         {
-            _extenders.Remove(extender);
+            Extenders.Remove(extender);
         }
 
-        public async Task Execute(Func<Task> action, IHttpContext requestContext)
+        protected virtual async Task ExecutePreprocessing(IExecutionContext<Tin, Tout> requestContext)
         {
-            foreach (var extender in _extenders) extender.Preprocessing(requestContext);
+            foreach (var extender in Extenders) await extender.PreprocessAsync(requestContext);
+        }
 
-            await action();
+        protected virtual async Task ExecutePostprocessing(IExecutionContext<Tin, Tout> requestContext)
+        {
+            foreach (var extender in Extenders) await extender.PostprocessAsync(requestContext);
+        }
 
-            foreach (var extender in _extenders) extender.Postprocessing(requestContext);
+        public async Task<Tout> ExecuteAsync(Func<Task<Tout>> action, IExecutionContext<Tin, Tout> actionContext)
+        {
+            await ExecutePreprocessing(actionContext);
+
+            var result = await action();
+            actionContext.Postproccessingdata = result;
+
+            await ExecutePostprocessing(actionContext);
+
+            return result;
         }
     }
 }

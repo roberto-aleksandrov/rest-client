@@ -1,15 +1,23 @@
 ﻿namespace Contracts
 {
-    using Interfaces;
+    using Contracts.Interfaces;
     using System.Collections.Generic;
+    using System.Net.Http;
 
-    public class HttpContext : IHttpContext
+    public class ExecutionContext : IExecutionContext<HttpRequestMessage, HttpResponseMessage>
     {
-        private IDictionary<string, object> _sharedVariables;
+        private readonly IDictionary<string, object> _sharedVariables;
+        
+        public ExecutionContext(HttpRequestMessage preprocessingData)
+        {
+            _sharedVariables = new Dictionary<string, object>();
+            PreproccessingData = preprocessingData;
+        }
 
-        public Request Request { get; set; }
+        public HttpRequestMessage PreproccessingData { get; set; }
 
-        public Response Response { get; set; }
+        public HttpResponseMessage Postproccessingdata { get; set; }
+
 
         public void AddSharedVariable(string key, object value)
         {

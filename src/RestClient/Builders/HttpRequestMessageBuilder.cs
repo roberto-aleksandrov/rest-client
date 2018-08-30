@@ -6,7 +6,7 @@
     using RestClient.Builders.Interfaces;
     using RestClient.Serializers.Interfaces;
 
-    public class HttpRequestMessageBuilder : IHttpRequestMessageBuilder
+    internal class HttpRequestMessageBuilder : IHttpRequestMessageBuilder
     {
         private readonly ISerializer _serializer;
         private readonly HttpRequestMessage _requestMessage;
@@ -31,6 +31,7 @@
         public IHttpRequestMessageBuilder WithContent(object content)
         {
             _requestMessage.Content = new StringContent(_serializer.Serialize(content));
+
             return this;
         }
 

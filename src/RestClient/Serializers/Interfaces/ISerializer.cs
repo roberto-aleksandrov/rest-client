@@ -1,4 +1,6 @@
-﻿namespace RestClient.Serializers.Interfaces
+﻿using System.Net.Http;
+
+namespace RestClient.Serializers.Interfaces
 {
     public interface ISerializer
     {

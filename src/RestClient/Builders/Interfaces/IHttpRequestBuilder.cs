@@ -1,6 +1,6 @@
 ﻿namespace RestClient.Builders.Interfaces
 {
-    public interface IHttpRequestBuilder
+    internal interface IHttpRequestBuilder
     {
         IHttpRequestMessageBuilder New();
     }

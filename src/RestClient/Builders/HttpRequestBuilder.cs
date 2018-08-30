@@ -4,12 +4,12 @@
     using RestClient.Serializers;
     using RestClient.Serializers.Interfaces;
 
-    public class HttpRequestBuilder : IHttpRequestBuilder
+    internal class HttpRequestBuilder : IHttpRequestBuilder
     {
         private readonly ISerializer _serializer;
 
         public HttpRequestBuilder()
-        :this(new JsonSerializer()) { }
+         : this(new JsonSerializer()) { }
 
         public HttpRequestBuilder(ISerializer serializer)
         {

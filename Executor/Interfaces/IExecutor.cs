@@ -3,12 +3,12 @@
     using System;
     using System.Threading.Tasks;
 
-    public interface IExecutor
+    public interface IExecutor<Tin, Tout>
     {
-        void AddRequestExtender(IExtender extender);
+        void AddRequestExtender(IExtender<Tin, Tout> extender);
 
-        void RemoveRequestExtender(IExtender extender);
+        void RemoveRequestExtender(IExtender<Tin, Tout> extender);
 
-        Task Execute(Func<Task> action, IHttpContext requestContext);
+        Task<Tout> ExecuteAsync(Func<Task<Tout>> action, IExecutionContext<Tin, Tout> actionContext);
     }
 }
