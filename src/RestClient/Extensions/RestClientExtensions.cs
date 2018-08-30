@@ -1,11 +1,11 @@
-﻿using RestClient.Client.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace RestClient.Extensions
+﻿namespace RestClient.Extensions
 {
+    using RestClient.Client.Interfaces;
+    using System;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     public static class RestClientExtensions
     {
         public static async Task<TResponse> PostAsync<TResponse>(this IRestClient client, Uri uri, IDictionary<string, string> headers = null, CancellationToken cancellationToken = default(CancellationToken))
