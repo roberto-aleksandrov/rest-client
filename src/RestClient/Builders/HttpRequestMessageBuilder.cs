@@ -24,29 +24,36 @@
 
         public IHttpRequestMessageBuilder ToUri(Uri uri)
         {
-            _requestMessage.RequestUri = uri;
+            _requestMessage.RequestUri = uri ?? throw new ArgumentException("Uri cannot be null.");
             return this;
         }
 
         public IHttpRequestMessageBuilder WithContent(object content)
         {
-            _requestMessage.Content = new StringContent(_serializer.Serialize(content));
+            if(content != null)
+            {
+                _requestMessage.Content = new StringContent(_serializer.Serialize(content));
+            }
 
             return this;
         }
 
         public IHttpRequestMessageBuilder WithHeaders(IDictionary<string, string> headers)
         {
-            foreach (var header in headers)
+            if (headers != null)
             {
-                _requestMessage.Headers.Add(header.Key, header.Value);
-            } 
+                foreach (var header in headers)
+                {
+                    _requestMessage.Headers.Add(header.Key, header.Value);
+                }
+            }
+                
             return this;
         }
 
         public IHttpRequestMessageBuilder WithMethod(HttpMethod method)
         {
-            _requestMessage.Method = method;
+            _requestMessage.Method = method ?? HttpMethod.Get;
             return this;
         }
     }
